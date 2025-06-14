@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: mscartoes
+  datasource:
+    url: jdbc:postgresql://localhost:5436/postgres
+    username: postgres
+    password: changeme
+    show-sql: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        format_sql: true
+    show-sql: true
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka # URL of your Eureka server
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
