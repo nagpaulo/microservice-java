@@ -1,6 +1,6 @@
 package br.com.microservices.msavaliadorcredito.controller;
 
-import br.com.microservices.msclientes.controller.exception.ApiErrors;
+import br.com.microservices.msavaliadorcredito.controller.exception.ApiErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
