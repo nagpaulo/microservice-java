@@ -2,6 +2,7 @@ package br.com.microservices.msavaliadorcredito.controller;
 
 import br.com.microservices.msavaliadorcredito.exceptions.ErrorDetails;
 import br.com.microservices.msavaliadorcredito.exceptions.ResourceNotFoundException;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,6 +24,20 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(ResourceNotFoundException.class)
     public final ResponseEntity<Object> handleRecursoNaoEncontradoException(ResourceNotFoundException ex, WebRequest request) {
         // Cria o nosso objeto de resposta de erro padronizado.
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage(), // Usa a mensagem da sua exceção
+                request.getDescription(false).replace("uri=", "")
+        );
+
+        // Retorna o ResponseEntity com o objeto de erro e o status HTTP 404.
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FeignException.NotFound.class)
+    public final ResponseEntity<Object> handleFeignNotFoundException(FeignException.NotFound ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),

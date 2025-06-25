@@ -1,5 +1,6 @@
 package br.com.microservices.msavaliadorcredito.clients;
 
+import br.com.microservices.msavaliadorcredito.dto.CartaoOut;
 import br.com.microservices.msavaliadorcredito.dto.ClienteDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

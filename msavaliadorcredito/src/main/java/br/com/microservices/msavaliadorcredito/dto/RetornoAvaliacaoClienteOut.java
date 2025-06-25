@@ -3,10 +3,10 @@ package br.com.microservices.msavaliadorcredito.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder(toBuilder = true)
-public class DadosClienteDto {
-    private Long id;
-    private String nome;
-    private Integer idade;
+public class RetornoAvaliacaoClienteOut {
+    private List<CartaoAprovadoDto> cartoes;
 }

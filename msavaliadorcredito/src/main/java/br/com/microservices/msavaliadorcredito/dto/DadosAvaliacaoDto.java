@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder(toBuilder = true)
-public class DadosClienteDto {
-    private Long id;
-    private String nome;
-    private Integer idade;
+public class DadosAvaliacaoDto {
+    private String cpf;
+    private Long renda;
 }

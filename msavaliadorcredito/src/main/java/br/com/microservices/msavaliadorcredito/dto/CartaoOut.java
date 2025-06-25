@@ -3,10 +3,13 @@ package br.com.microservices.msavaliadorcredito.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
-@Builder(toBuilder = true)
-public class DadosClienteDto {
+@Builder
+public class CartaoOut {
     private Long id;
     private String nome;
-    private Integer idade;
+    private String bandeira;
+    private BigDecimal limiteBasico;
 }

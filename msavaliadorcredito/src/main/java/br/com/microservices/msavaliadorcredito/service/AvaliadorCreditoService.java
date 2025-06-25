@@ -7,6 +7,7 @@ import br.com.microservices.msavaliadorcredito.exceptions.ResourceNotFoundExcept
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -41,5 +42,37 @@ public class AvaliadorCreditoService {
                 .cartoes(listCartaoCliente)
                 .build();
 
+    }
+
+    public RetornoAvaliacaoClienteOut realizarAvaliacao(String cpf, Long renda) {
+        ClienteDto clienteDto = clienteResourceClient.dadosClientes(cpf)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado para o CPF informado."));
+
+        DadosClienteDto dadosClienteDto = DadosClienteDto.builder()
+                .id(clienteDto.getId())
+                .nome(clienteDto.getNome())
+                .idade(clienteDto.getIdade())
+                .build();
+
+        List<CartaoOut> cartoes = cartaoClienteResourceClient.getCartoesRendaAteh(renda);
+        List<CartaoAprovadoDto> listCartaoAprovado = cartoes.stream().map(
+                cartao -> {
+                    BigDecimal limiteBasico = cartao.getLimiteBasico();
+                    BigDecimal idadeBD = new BigDecimal(dadosClienteDto.getIdade());
+
+                    var fator = idadeBD.divide(BigDecimal.valueOf(10));
+                    BigDecimal limiteAprovado = fator.multiply(limiteBasico);
+
+                    return CartaoAprovadoDto.builder()
+                            .cartao(cartao.getNome())
+                            .bandeira(cartao.getBandeira())
+                            .limiteAprovado(limiteAprovado)
+                            .build();
+                }
+        ).toList();
+
+        return RetornoAvaliacaoClienteOut.builder()
+                .cartoes(listCartaoAprovado)
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package br.com.microservices.msavaliadorcredito.clients;
 
+import br.com.microservices.msavaliadorcredito.dto.CartaoOut;
 import br.com.microservices.msavaliadorcredito.dto.ClienteCartaoOut;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,4 +12,7 @@ import java.util.List;
 public interface CartaoClienteResourceClient {
     @GetMapping(params = "cpf")
     List<ClienteCartaoOut> getCartoesByCliente(@RequestParam("cpf") String cpf);
+
+    @GetMapping(params = "renda")
+    List<CartaoOut> getCartoesRendaAteh(@RequestParam("renda") Long renda);
 }
