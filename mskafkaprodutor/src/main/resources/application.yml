@@ -1,6 +1,6 @@
 spring:
   application:
-    name: msavaliadorcredito
+    name: mskafkaprodutor
   datasource:
     url: jdbc:postgresql://localhost:5436/postgres
     username: postgres
@@ -22,9 +22,12 @@ spring:
     web:
       resources.add-mappings: false
   kafka:
-    bootstrap-servers: localhost:9093
-    schema-registry: http://localhost:8081
-
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    model:
+      topic: teste_topic
 
 server:
   port: 0
@@ -35,3 +38,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka # URL of your Eureka server
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: INFO
