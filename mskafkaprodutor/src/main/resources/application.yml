@@ -26,8 +26,9 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    model:
-      topic: teste_topic
+    topic:
+      teste: teste_topic
+      emissao-cartoes: emissao_cartoes_topic
 
 server:
   port: 0

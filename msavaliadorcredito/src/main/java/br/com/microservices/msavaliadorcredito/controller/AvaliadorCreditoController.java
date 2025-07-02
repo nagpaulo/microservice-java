@@ -1,8 +1,6 @@
 package br.com.microservices.msavaliadorcredito.controller;
 
-import br.com.microservices.msavaliadorcredito.dto.DadosAvaliacaoDto;
-import br.com.microservices.msavaliadorcredito.dto.RetornoAvaliacaoClienteOut;
-import br.com.microservices.msavaliadorcredito.dto.SituacaoClienteDto;
+import br.com.microservices.msavaliadorcredito.dto.*;
 import br.com.microservices.msavaliadorcredito.exceptions.ResourceNotFoundException;
 import br.com.microservices.msavaliadorcredito.service.AvaliadorCreditoService;
 import feign.FeignException;
@@ -42,6 +40,11 @@ public class AvaliadorCreditoController {
         } catch (FeignException.InternalServerError e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/solicitar-cartao")
+    public ProtocoloSolicitacaoCartao solicitarCartao(@RequestBody DadosSolicitacaoEmissaoCartao dados) {
+        return service.solicitacaoCartao(dados);
     }
 
 }

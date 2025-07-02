@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +74,13 @@ public class AvaliadorCreditoService {
 
         return RetornoAvaliacaoClienteOut.builder()
                 .cartoes(listCartaoAprovado)
+                .build();
+    }
+
+    public ProtocoloSolicitacaoCartao solicitacaoCartao(DadosSolicitacaoEmissaoCartao dados) {
+        var protocolo = UUID.randomUUID().toString();
+        return ProtocoloSolicitacaoCartao.builder()
+                .protocolo(protocolo)
                 .build();
     }
 }

@@ -25,7 +25,7 @@ public class KafkaProducerConfig {
 
     private final KafkaProperties kafkaProperties;
 
-    @Value("${spring.kafka.model.topic}")
+    @Value("${spring.kafka.topic.teste}")
     private String topicTesteRequest;
 
     @Value("${spring.kafka.bootstrap-servers}")

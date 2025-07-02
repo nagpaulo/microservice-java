@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class TesteRequestConsumer {
 
     @KafkaListener(
-            topics = "${spring.kafka.model.topic}",
+            topics = "${spring.kafka.topic.teste}",
             groupId = "${spring.kafka.consumer.group-id}"
     )
     public void consumer(String message) {

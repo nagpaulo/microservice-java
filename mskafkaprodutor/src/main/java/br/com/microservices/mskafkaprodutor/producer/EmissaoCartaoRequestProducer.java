@@ -1,5 +1,6 @@
 package br.com.microservices.mskafkaprodutor.producer;
 
+import br.com.microservices.mskafkaprodutor.dto.DadosSolicitacaoEmissaoCartao;
 import br.com.microservices.mskafkaprodutor.dto.TesteDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,18 +11,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TesteRequestProducer {
+public class EmissaoCartaoRequestProducer {
 
-    @Value("${spring.kafka.topic.teste}")
-    private String topicTesteRequest;
+    @Value("${spring.kafka.topic.emissao-cartoes}")
+    private String topicEmissaoCartaoRequest;
 
     private final ObjectMapper objectMapper;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public String sendMensagem(TesteDTO testeDTO) throws JsonProcessingException {
-        String conteudo = objectMapper.writeValueAsString(testeDTO);
-        kafkaTemplate.send(topicTesteRequest, conteudo);
-        return "Teste do topico enviado para processamento";
+    public String sendMensagem(DadosSolicitacaoEmissaoCartao dadosSolicitacaoEmissaoCartao) throws JsonProcessingException {
+        String conteudo = objectMapper.writeValueAsString(dadosSolicitacaoEmissaoCartao);
+        kafkaTemplate.send(topicEmissaoCartaoRequest, conteudo);
+        return "Emissao Cartao teste do topico enviado para processamento";
     }
 }

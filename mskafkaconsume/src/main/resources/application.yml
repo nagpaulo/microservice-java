@@ -27,9 +27,12 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
-      group-id: teste_group
-    model:
-      topic: teste_topic
+      group-id: ms_group
+      auto-offset-reset: latest
+    topic:
+      teste: teste_topic
+      emissao-cartoes: emissao_cartoes_topic
+
 
 server:
   port: 0
