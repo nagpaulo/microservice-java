@@ -3,6 +3,7 @@ package br.com.microservices.msavaliadorcredito.service;
 import br.com.microservices.msavaliadorcredito.clients.CartaoClienteResourceClient;
 import br.com.microservices.msavaliadorcredito.clients.ClienteResourceClient;
 import br.com.microservices.msavaliadorcredito.dto.*;
+import br.com.microservices.msavaliadorcredito.exceptions.ErroSolicitarCartaoException;
 import br.com.microservices.msavaliadorcredito.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -78,9 +79,13 @@ public class AvaliadorCreditoService {
     }
 
     public ProtocoloSolicitacaoCartao solicitacaoCartao(DadosSolicitacaoEmissaoCartao dados) {
-        var protocolo = UUID.randomUUID().toString();
-        return ProtocoloSolicitacaoCartao.builder()
-                .protocolo(protocolo)
-                .build();
+       try {
+           var protocolo = UUID.randomUUID().toString();
+           return ProtocoloSolicitacaoCartao.builder()
+                   .protocolo(protocolo)
+                   .build();
+       } catch (Exception e) {
+           throw new ErroSolicitarCartaoException(e.getMessage());
+       }
     }
 }

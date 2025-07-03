@@ -1,6 +1,7 @@
 package br.com.microservices.msavaliadorcredito.controller;
 
 import br.com.microservices.msavaliadorcredito.dto.*;
+import br.com.microservices.msavaliadorcredito.exceptions.ErroSolicitarCartaoException;
 import br.com.microservices.msavaliadorcredito.exceptions.ResourceNotFoundException;
 import br.com.microservices.msavaliadorcredito.service.AvaliadorCreditoService;
 import feign.FeignException;
@@ -44,7 +45,15 @@ public class AvaliadorCreditoController {
 
     @PostMapping("/solicitar-cartao")
     public ProtocoloSolicitacaoCartao solicitarCartao(@RequestBody DadosSolicitacaoEmissaoCartao dados) {
-        return service.solicitacaoCartao(dados);
+        try {
+            return service.solicitacaoCartao(dados);
+        } catch (ErroSolicitarCartaoException e) {
+            throw new ErroSolicitarCartaoException(e.getMessage());
+        } catch (FeignException.NotFound ex) {
+            throw new ResourceNotFoundException("O cartão com ID: " + dados.getIdCartao() + "do cliente com CPF: " + dados.getCpf() + " não foi encontrado.");
+        } catch (FeignException.InternalServerError e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

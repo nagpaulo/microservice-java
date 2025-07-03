@@ -2,6 +2,7 @@ package br.com.microservices.mscartoes.controller;
 
 import br.com.microservices.mscartoes.dto.cartao.CartaoIn;
 import br.com.microservices.mscartoes.dto.cartao.CartaoOut;
+import br.com.microservices.mscartoes.dto.cartao.DadosSolicitacaoEmissaoCartao;
 import br.com.microservices.mscartoes.dto.clienteCartao.ClienteCartaoOut;
 import br.com.microservices.mscartoes.service.CartaoService;
 import br.com.microservices.mscartoes.service.ClienteCartaoService;
@@ -38,5 +39,11 @@ public class CartoesController {
     @GetMapping(params = "cpf")
     public List<ClienteCartaoOut> getCartoesByCliente(@RequestParam("cpf") String cpf) {
         return clienteCartaoService.listCartoesByCpf(cpf);
+    }
+
+    @PostMapping("/solicitar-cartao")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void solicitarCartao(@RequestBody DadosSolicitacaoEmissaoCartao dados) {
+        service.receberSolicitar(dados);
     }
 }
