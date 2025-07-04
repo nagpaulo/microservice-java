@@ -1,0 +1,9 @@
+/* Vamos mudar a cor de fundo da página de login */
+body {
+    background-color: #f0f8ff; /* AliceBlue */
+}
+
+/* Vamos mudar a cor do cabeçalho */
+h1#kc-page-title {
+    color: #4a90e2; /* Um tom de azul */
+}
